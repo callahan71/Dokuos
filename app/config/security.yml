@@ -1,0 +1,58 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        AppBundle\Entity\User: bcrypt
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+        ROLE_USER: [ROLE_SHOW]
+        
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
+        in_memory:
+            memory:
+                users:
+                    admin: {password: adminpass, roles: ROLE_ADMIN}
+        user_db:
+            entity: { class: AppBundle\Entity\Users, property: username }
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        #dev:
+            #pattern: ^/(_(profiler|wdt)|css|images|js)/
+            #security: false
+            
+        main:
+            pattern: /.*
+            form_login:
+                login_path: /login
+                check_path: /login
+                #default_target_path: /show/{id}
+                default_target_path: /
+            logout:
+                path:   /logout
+                target: /
+            security: true
+            anonymous: true
+            #anonymous: ~
+            logout_on_user_change: true
+            provider: chain_provider
+            
+        # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            #form_login: ~
+            
+    access_control:
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /show/.*, roles: ROLE_USER }
+        # - { path: /cms/user, roles: ROLE_ADMIN }
+        # - { path: /cms/category, roles: ROLE_ADMIN }
+        # - { path: /cms/page, roles: ROLE_USER }
+        # - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

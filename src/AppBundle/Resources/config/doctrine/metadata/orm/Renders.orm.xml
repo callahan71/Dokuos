@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Renders" table="renders">
+    <indexes>
+      <index name="fk_render_material" columns="materialID"/>
+      <index name="IDX_B6FD1BD45ACF4EB1" columns="active_zoneID"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="uc_render" columns="active_zoneID,materialID"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="image" type="string" column="image" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="materialid" target-entity="Materials" fetch="LAZY">
+      <join-columns>
+        <join-column name="materialID" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="activeZoneid" target-entity="ActiveZones" fetch="LAZY">
+      <join-columns>
+        <join-column name="active_zoneID" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

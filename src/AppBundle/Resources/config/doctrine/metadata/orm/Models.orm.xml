@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Models" table="models">
+    <indexes>
+      <index name="fk_model_user" columns="userID"/>
+      <index name="fk_model_category" columns="categoryID"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="uc_model" columns="ref"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="ref" type="string" column="ref" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="image" type="string" column="image" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="name" type="string" column="name" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="userid" target-entity="Users" fetch="LAZY">
+      <join-columns>
+        <join-column name="userID" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="categoryid" target-entity="Categories" fetch="LAZY">
+      <join-columns>
+        <join-column name="categoryID" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

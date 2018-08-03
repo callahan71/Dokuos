@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Combinations" table="combinations">
+    <indexes>
+      <index name="fk_combination_showcase" columns="showcaseID"/>
+      <index name="fk_combination_material" columns="materialID"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="uc_combination" columns="keyCHAR,showcaseID"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="keychar" type="string" column="keyCHAR" length="1" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="showcaseid" target-entity="Showcases" fetch="LAZY">
+      <join-columns>
+        <join-column name="showcaseID" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="materialid" target-entity="Materials" fetch="LAZY">
+      <join-columns>
+        <join-column name="materialID" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
