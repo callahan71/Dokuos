@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Videos
  *
  * @ORM\Table(name="videos", indexes={@ORM\Index(name="fk_video_user", columns={"userID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VideoRepository")
  */
 class Videos
 {

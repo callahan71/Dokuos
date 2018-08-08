@@ -3,14 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Users
  *
  * @ORM\Table(name="users")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Users
+class Users implements UserInterface
 {
     /**
      * @var integer
@@ -56,7 +57,9 @@ class Users
      */
     private $image;
 
-
+	public function __toString(){
+			return $this->username;
+	}
 
     /**
      * Get id
@@ -101,7 +104,7 @@ class Users
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_BCRYPT); //tiene que encriptarse asi
 
         return $this;
     }
@@ -137,6 +140,11 @@ class Users
      */
     public function getRole()
     {
+		/*
+		 * Este metodo no se usa en realidad
+		 * Se usa getRoles() que está al final
+		 * Se implementa al hacer uso de UserInterface
+		 */
         return $this->role;
     }
 
@@ -186,5 +194,26 @@ class Users
     public function getImage()
     {
         return $this->image;
+    }
+	
+	
+	public function getSalt()
+    {
+        return null;
+    }
+	
+	public function getRoles()
+    {
+		/*
+		 * Si todos los usuarios fueran ROLE_USER
+		 * devolvería siempre:
+		 * return array('ROLE_USER');
+		 * o lo que yo quisiera
+		 */
+        return array($this->role);
+    }
+	
+	public function eraseCredentials()
+    {
     }
 }

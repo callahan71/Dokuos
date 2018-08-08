@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Materials
  *
  * @ORM\Table(name="materials", uniqueConstraints={@ORM\UniqueConstraint(name="uc_material", columns={"ref"})}, indexes={@ORM\Index(name="fk_material_user", columns={"userID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MaterialRepository")
  */
 class Materials
 {

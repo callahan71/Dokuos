@@ -3,7 +3,9 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        AppBundle\Entity\User: bcrypt
+        AppBundle\Entity\Users: bcrypt
+            # algorithm: bcrypt
+            # cost: 12
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER]
         ROLE_USER: [ROLE_SHOW]
@@ -17,6 +19,7 @@ security:
             memory:
                 users:
                     admin: {password: adminpass, roles: ROLE_ADMIN}
+                    jaime: {password: jaime, roles: ROLE_USER}
         user_db:
             entity: { class: AppBundle\Entity\Users, property: username }
     firewalls:
@@ -52,7 +55,8 @@ security:
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /show/.*, roles: ROLE_USER }
-        # - { path: /cms/user, roles: ROLE_ADMIN }
-        # - { path: /cms/category, roles: ROLE_ADMIN }
-        # - { path: /cms/page, roles: ROLE_USER }
-        # - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /show/user, roles: ROLE_ADMIN }
+        - { path: /show/category, roles: ROLE_ADMIN }
+        - { path: /show/video, roles: ROLE_USER }
+        - { path: /show/material, roles: ROLE_USER }
+        - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

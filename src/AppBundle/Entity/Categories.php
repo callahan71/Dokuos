@@ -3,12 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Categories
  *
  * @ORM\Table(name="categories")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
 class Categories
 {
@@ -28,7 +29,18 @@ class Categories
      */
     private $name;
 
-
+	/**
+     * @ORM\OneToMany(targetEntity="Models", mappedBy="categoryid")
+     */
+    private $models;
+	
+	public function __construct(){
+		$this->models = new ArrayCollection();
+	}
+	
+	public function __toString(){
+		return $this->name;
+	}
 
     /**
      * Get id
@@ -62,5 +74,39 @@ class Categories
     public function getName()
     {
         return $this->name;
+    }
+	
+	/**
+     * Add model
+     *
+     * @param \AppBundle\Entity\Models $model
+     *
+     * @return Categories
+     */
+    public function addModel(\AppBundle\Entity\Models $model)
+    {
+        $this->models[] = $model;
+
+        return $this;
+    }
+
+    /**
+     * Remove model
+     *
+     * @param \AppBundle\Entity\Models $model
+     */
+    public function removeModel(\AppBundle\Entity\Models $model)
+    {
+        $this->models->removeElement($model);
+    }
+
+    /**
+     * Get models
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getModels()
+    {
+        return $this->models;
     }
 }
