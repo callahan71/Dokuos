@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="robots" content="noindex">
+    <title>DOKUOS</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">    
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    
+</head>
+
+<body id="showcase" data-user-profile="{{ array|json_encode() }}">
+
+    <!-- Start your project here-->
+    
+    <header>
+        <img id="logo" src="{{ asset('img/DOKUOS-logo.png') }}" class="img-fluid" alt="Logo Dokuos">
+    </header>
+    
+    <main>
+        {% for category in categories %}
+            <div class="view overlay zoom option" id="opt{{ category.categoryid.id }}" data-toggle="modal" data-target="#{{ category.categoryid.id }}">
+                <img src="{{ asset('img/DOKUOS-logo.png') }}" class="img-fluid img-full" alt="zoom">
+                <div class="mask flex-row waves-effect waves-light">
+                    <span class="texto-vertical">{{ category.categoryid }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+    
+    <!--
+    <main>
+        <div class="view overlay zoom option" id="opt5" data-toggle="modal" data-target="#modalBedroom">
+            <img src="img/menu/04.opt.bedroom.jpg" class="img-fluid img-full" alt="zoom">
+            <div class="mask flex-row waves-effect waves-light">
+                <span class="texto-vertical">dormitorios</span>
+            </div>
+        </div>
+    </main>
+    -->
+    <footer>
+        <p class="text-center">SELECCIONE UNA CATEGORÍA Y A CONTINUACIÓN UN AMBIENTE</p>
+    </footer>
+    <!-- /Start your project here-->
+    
+    {% for category in categories %}
+    <!-- Modal {{ category.categoryid }}-->
+    <div class="modal fade bd-example-modal-lg" id="{{ category.categoryid.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+
+            <!--Carousel Wrapper-->
+            <div id="carousel-{{ category.categoryid.id }}" class="carousel slide carousel-fade" data-ride="carousel">
+                <!--Indicators-->
+                <ol class="carousel-indicators">
+                    {% set slide = 0 %}
+                    {% for model in models %}
+                        {% if category.categoryid.id == model.categoryid.id %}
+                            {% if slide == 0%}
+                                <li data-target="#carousel-{{ category.categoryid.id }}" data-slide-to="{{ slide }}" class="active"></li>
+                            {% else %}
+                                <li data-target="#carousel-{{ category.categoryid.id }}" data-slide-to="{{ slide }}"></li>
+                            {% endif %}
+                        {% endif %}
+                        {% set slide = slide + 1 %}
+                    {% endfor %} 
+                </ol>
+                <!--/.Indicators-->
+                
+                <!--Slides-->
+                <div class="carousel-inner" role="listbox">   
+                    {% set slide = 1 %}                                           
+                    <!--slide-->
+                        {% for model in models %} 
+                            {% if category.categoryid.id == model.categoryid.id %}
+                                {% if slide == 1%}
+                                    <div class="carousel-item active">
+                                {% else %}
+                                    <div class="carousel-item">
+                                {% endif %}
+                                {% set slide = 2 %}                    
+                                    <a href="https://www.google.com">
+                                        <img class="d-block w-100" src="{{ asset('uploads/' ~ model.userid ~ '/' ~ model.image) }}" alt="{{ model.name }}">
+                                    </a>
+                                </div>
+                            {% endif %}   
+                        {% endfor %}      
+                    <!--/slide-->
+                                     
+                </div>
+                <!--/.Slides-->
+                <!--Controls-->
+                <a class="carousel-control-prev" href="#carousel-{{ category.categoryid.id }}" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-{{ category.categoryid.id }}" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <!--/.Controls-->
+            </div>
+            <!--/.Carousel Wrapper-->
+        </div>
+      </div>
+    </div>
+    <!-- /Modal -->
+    {% endfor %}
+    
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>    
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var showcase = document.querySelector('#showcase');
+            var nameShowcase = showcase.dataset.userProfile;
+            arrayCombinations = JSON.parse(nameShowcase);
+        });
+        
+        $("body").keypress(function(event) { //keypress devuelve mayusculas y minusculas e ignora shift y control
+            var value = String.fromCharCode(event.which);
+            event.stopPropagation();                
+            material = arrayCombinations[value];                    
+            alert(material);
+        });
+    </script>
+</body>
+
+</html>

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Showcases
  *
  * @ORM\Table(name="showcases", uniqueConstraints={@ORM\UniqueConstraint(name="uc_showcase", columns={"token"})}, indexes={@ORM\Index(name="fk_showcase_user", columns={"userID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ShowcaseRepository")
  */
 class Showcases
 {
@@ -59,7 +59,9 @@ class Showcases
      */
     private $userid;
 
-
+	public function __toString(){
+		return $this->name;
+	}
 
     /**
      * Get id

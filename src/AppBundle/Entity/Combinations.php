@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Combinations
  *
  * @ORM\Table(name="combinations", uniqueConstraints={@ORM\UniqueConstraint(name="uc_combination", columns={"keyCHAR", "showcaseID"})}, indexes={@ORM\Index(name="fk_combination_showcase", columns={"showcaseID"}), @ORM\Index(name="fk_combination_material", columns={"materialID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CombinationRepository")
  */
 class Combinations
 {

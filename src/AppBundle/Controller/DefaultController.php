@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,26 +29,44 @@ class DefaultController extends Controller
     
     /**
      *
-     * @Route("/show/{id}", name="showcase_display")
+     * @Route("/show/{token}", name="showcase_display")
+	 * @Security("has_role('ROLE_SHOW')")
      */
-    public function displayAction($id)
+    public function displayAction($token)
     {
         $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository('AppBundle:Showcases')->find($id);
+        $show = $em->getRepository('AppBundle:Showcases')->findOneBy(['token' => $token]);
         //return $this->render('AppBundle:Default:display.html.twig',array('page'=>$page));
         
-        if (!$page) {
+        if (!$show) {
         throw $this->createNotFoundException(
-            'No showcase found for id '.$id
+            'No showcase found for token '.$token
         );
-        }
+        } else {
+			$user = $em->getRepository('AppBundle:Users')->findOneBy(['id' => $show->getUserid()]);
+			$models = $em->getRepository('AppBundle:Models')->findUserModelsOrderedByCategory($user);
+			$combinations = $em->getRepository('AppBundle:Combinations')->findShowcaseCombinationsOrderedByKey($show);
+			$categories = $em->getRepository('AppBundle:Models')->findUserModelsCategories($user);
+			
+			$arrayCombinations = array();
+			foreach ($combinations as $combination){
+				$arrayCombinations[$combination->getKeychar()]=$combination->getMaterialid()->getRef();
+			}
+		}
         // ... do something, like pass the $product object into a template
         // 
         // En este metodo se han de cargar todas las combinaciones del showcase en 
         // el localStorage de javascript e ir a la página principal del menu.
         // 
         //return new Response('<html><body>Probando ruta: '.$id.'</body></html>');
-        return new Response(var_dump($page));
+        //return new Response(var_dump($show,$models,$combinations));
+		return $this->render('main/index.html.twig', array(
+			'show' => $show,
+            'models' => $models,
+			'combinations' => $combinations,
+			'array' => $arrayCombinations,
+			'categories' => $categories
+        ));
 
     }
 }

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+		<div class="col-md-10">
+			<h1>Combination</h1>
+		</div>
+		<div class="col-md-1">
+			<div class="col-md-offset-6 col-md-1">
+			    {{ form_start(delete_form) }}
+					<button type="submit" class="btn btn-danger">Delete</button>
+				{{ form_end(delete_form) }}
+			</div>
+		</div>
+	</div>
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ combination.id }}</td>
+            </tr>
+            <tr>
+                <th>Showcase</th>
+                <td>{{ combination.showcaseid }}</td>
+            </tr>
+            <tr>
+                <th>KeyCHAR</th>
+                <td>{{ combination.keychar }}</td>
+            </tr>
+            <tr>
+                <th>Material</th>
+                <td>{{ combination.materialid }}</td>
+            </tr>
+        </tbody>
+    </table>
+	<a class="btn btn-default" href="{{ path('show_showcase_index') }}" role="button">Back to the list</a>
+
+	<a class="btn btn-primary" href="{{ path('show_showcase_combination_edit', { 'id': combination.id }) }}" role="button">Edit</a>
+	
+{% endblock %}

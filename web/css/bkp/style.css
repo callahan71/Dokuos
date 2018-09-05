@@ -1,0 +1,126 @@
+/* Your custom styles */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700);
+
+body {
+	margin: 0;
+	background-image: url("/dokuos2/web/img/background-2.jpg");
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+header, footer {
+	padding: 10px;
+	margin: 5px;
+}
+
+main {
+	padding: 5px;
+	padding-top: 0px;
+	margin: 5px;
+	margin-top: 0px;
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
+	align-items: stretch;
+	align-content: stretch;
+	justify-content: space-around;
+}
+
+.option {
+	margin: 10px;
+	flex-basis: 0px;
+	flex-grow: 1;
+}		
+
+.texto-vertical {
+	padding: 5px;
+	font-family: 'Open Sans', sans-serif;
+	text-transform: uppercase;
+	text-align: left;
+	font-size: 7vh;
+    -webkit-writing-mode: vertical-lr;
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+    opacity: 0.4;
+}
+
+.img-full {
+	height: 100%;
+    width: 100%;
+}
+
+#logo {
+  height: 9vh;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  width: 100px;
+  outline: black;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-image: none;
+}
+
+.img-container {
+	width: 100%;
+	height: 100vh;
+	display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+.img-item {
+	-webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+}
+
+.img-item-fixed {
+  display:block;
+  position:fixed;
+  top:0px;
+  left:0px;
+}
+
+.flotante {
+    display:block;
+    position:fixed;
+    bottom:10vh;
+    right:10vh;
+}
+
+.volver {
+  color: black;
+  font-size: 5em;
+  opacity: 0.5;
+}

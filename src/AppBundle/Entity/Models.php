@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Models
  *
  * @ORM\Table(name="models", uniqueConstraints={@ORM\UniqueConstraint(name="uc_model", columns={"ref"})}, indexes={@ORM\Index(name="fk_model_user", columns={"userID"}), @ORM\Index(name="fk_model_category", columns={"categoryID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ModelRepository")
  */
 class Models
 {
@@ -43,9 +43,9 @@ class Models
     private $name;
 
     /**
-     * @var \Categories
+	 * @var \Categories
      *
-     * @ORM\ManyToOne(targetEntity="Categories")
+     * @ORM\ManyToOne(targetEntity="Categories", inversedBy="models")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="categoryID", referencedColumnName="id")
      * })
@@ -62,7 +62,9 @@ class Models
      */
     private $userid;
 
-
+	public function __toString(){
+		return $this->name;
+	}
 
     /**
      * Get id

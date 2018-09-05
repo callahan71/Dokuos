@@ -46,10 +46,13 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+			//Creamos directorio con el nombre del usuario
+			mkdir($this->getParameter('upload_directory').'/'.$user->getUsername(), 0700);
+			
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
+            $em->persist($user);			
             $em->flush();
-
+			
             return $this->redirectToRoute('show_user_show', array('id' => $user->getId()));
         }
 
@@ -117,6 +120,10 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
+			
+			// Para borrar el directorio. 
+			// Da error si no esta vacio
+			//rmdir($this->getParameter('upload_directory').'/'.$user->getUsername());
         }
 
         return $this->redirectToRoute('show_user_index');

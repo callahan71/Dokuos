@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center">Render creation</h1>
+
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+        <div class="form-group">
+			<label class="col-md-4 control-label">Image</label>
+			<div class="col-md-5">
+			  {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+        <div class="form-group">
+			<label class="col-md-4 control-label">Material</label>
+			<div class="col-md-5">
+			  {{ form_widget(form.materialid, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+        <div class="form-group">
+			<div class="col-md-offset-5 col-md-1">
+			  <button type="submit" class="btn btn-primary">Create</button>
+			</div>
+		</div>
+    {{ form_end(form) }}
+
+{% endblock %}

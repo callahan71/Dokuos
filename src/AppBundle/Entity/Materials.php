@@ -52,7 +52,9 @@ class Materials
      */
     private $userid;
 
-
+	public function __toString(){
+		return $this->name;
+	}
 
     /**
      * Get id

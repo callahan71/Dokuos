@@ -54,9 +54,12 @@ security:
             
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: /show/.*, roles: ROLE_USER }
+        # - { path: /show/.*, roles: ROLE_USER }
         - { path: /show/user, roles: ROLE_ADMIN }
         - { path: /show/category, roles: ROLE_ADMIN }
         - { path: /show/video, roles: ROLE_USER }
         - { path: /show/material, roles: ROLE_USER }
+        - { path: /show/model, roles: ROLE_ADMIN }
+        - { path: /show/showcase, roles: ROLE_ADMIN }
+        - { path: /show/showcase/new, roles: ROLE_ADMIN }
         - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

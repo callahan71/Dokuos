@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center">Model creation</h1>
+
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+        <div class="form-group">
+			<label class="col-md-4 control-label">Ref</label>
+			<div class="col-md-5">
+			  {{ form_widget(form.ref, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+        <div class="form-group">
+			<label class="col-md-4 control-label">Name</label>
+			<div class="col-md-5">
+			  {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+        <div class="form-group">
+			<label class="col-md-4 control-label">User</label>
+			<div class="col-md-5">
+			  {{ form_widget(form.userid, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+        <div class="form-group">
+			<label class="col-md-4 control-label">Category</label>
+			<div class="col-md-5">
+			  {{ form_widget(form.categoryid, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+        <div class="form-group">
+			<label class="col-md-4 control-label">Image</label>
+			<div class="col-md-5">
+			  {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+        <div class="form-group">
+			<div class="col-md-offset-5 col-md-1">
+			  <button type="submit" class="btn btn-primary">Create</button>
+			</div>
+			<div class="col-md-3">
+			  <a class="btn btn-default" href="{{ path('show_model_index') }}" role="button">Back to the list</a>
+			</div>
+		</div>
+    {{ form_end(form) }}
+
+{% endblock %}

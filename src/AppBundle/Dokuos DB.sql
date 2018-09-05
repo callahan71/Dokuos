@@ -58,7 +58,7 @@ CONSTRAINT pk_model PRIMARY KEY (id),
 CONSTRAINT fk_model_user FOREIGN KEY (userID)  REFERENCES users(id)
 ON DELETE CASCADE,
 CONSTRAINT fk_model_category FOREIGN KEY (categoryID)  REFERENCES categories(id)
-ON DELETE CASCADE,
+ON DELETE SET NULL,
 CONSTRAINT uc_model UNIQUE (ref)
 )ENGINE=InnoDb;
 
@@ -75,29 +75,29 @@ CREATE TABLE combinations (
 id                  int(255) auto_increment not null,
 keyCHAR             varchar(1) not null,
 showcaseID          int(255),
-materialID         int(255),
+materialID          int(255),
 CONSTRAINT pk_combination PRIMARY KEY (id),
 CONSTRAINT fk_combination_showcase FOREIGN KEY (showcaseID) REFERENCES showcases(id)
 ON DELETE CASCADE,
 CONSTRAINT fk_combination_material FOREIGN KEY (materialID) REFERENCES materials(id)
-ON DELETE CASCADE,
-CONSTRAINT uc_combination UNIQUE (keyCHAR, showcaseID)
+ON DELETE SET NULL
 )ENGINE=InnoDb;
 
 CREATE TABLE active_zones (
 id          int(255) auto_increment not null,
 zoneREF     varchar(255),
-modelID    int(255),
+modelID     int(255),
 map         varchar(255),
 CONSTRAINT pk_active_zone PRIMARY KEY (id),
 CONSTRAINT fk_active_zone_model FOREIGN KEY (modelID) REFERENCES models(id)
-ON DELETE CASCADE
+ON DELETE CASCADE,
+CONSTRAINT uc_active_zones UNIQUE (zoneREF, modelID)
 )ENGINE=InnoDb;
 
 CREATE TABLE renders (
 id                  int(255) auto_increment not null,
 active_zoneID       int(255),
-materialID         int(255),
+materialID          int(255),
 image               varchar(255),
 CONSTRAINT pk_render PRIMARY KEY (id),
 CONSTRAINT fk_render_active_zone FOREIGN KEY (active_zoneID)  REFERENCES active_zones(id)

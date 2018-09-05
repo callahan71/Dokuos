@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Main</h1>
+
+    <h2 id="showcase" data-user-profile="{{ array|json_encode() }}">Showcase</h2>
+    <p>{{ show.name }}</p>
+    <p>{{ show.token }}</p>
+    
+    <h2>Models</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ref</th>
+                <th>Name</th>
+                <th>User</th>
+                <th>Category</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for model in models %}
+            <tr>
+                <td><a href="{{ path('show_model_show', { 'id': model.id }) }}">{{ model.id }}</a></td>
+                <td>{{ model.ref }}</td>
+                <td>{{ model.name }}</td>
+                <td>{{ model.userid }}</td> 
+                <td>{{ model.categoryid }}</td> 
+                <td>{{ model.image }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        
+    <h2>Combinations list</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Key</th>
+                <th>Material</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for combination in combinations %}
+            <tr>
+                <td>{{ combination.id }}</td>
+                <td>{{ combination.keychar }}</td>
+                <td>{{ combination.materialid }}</td> 
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        {#
+		{% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-primary" href="{{ path('show_model_new') }}">Create a new model</a>
+        {% endif %}
+        #}
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var showcase = document.querySelector('#showcase');
+            var nameShowcase = showcase.dataset.userProfile;
+            arrayCombinations = JSON.parse(nameShowcase);
+        });
+    </script>
+{% endblock %}

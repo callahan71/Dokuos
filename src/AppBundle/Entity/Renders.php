@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Renders
  *
  * @ORM\Table(name="renders", uniqueConstraints={@ORM\UniqueConstraint(name="uc_render", columns={"active_zoneID", "materialID"})}, indexes={@ORM\Index(name="fk_render_material", columns={"materialID"}), @ORM\Index(name="IDX_B6FD1BD45ACF4EB1", columns={"active_zoneID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RenderRepository")
  */
 class Renders
 {

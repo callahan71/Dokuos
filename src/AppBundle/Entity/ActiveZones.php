@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ActiveZones
  *
  * @ORM\Table(name="active_zones", indexes={@ORM\Index(name="fk_active_zone_model", columns={"modelID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ActiveZonesRepository")
  */
 class ActiveZones
 {
@@ -45,7 +45,9 @@ class ActiveZones
      */
     private $modelid;
 
-
+	public function __toString(){
+		return $this->zoneref;
+	}
 
     /**
      * Get id
