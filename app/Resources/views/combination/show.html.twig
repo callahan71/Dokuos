@@ -3,12 +3,12 @@
 {% block body %}
     <div class="row">
 		<div class="col-md-10">
-			<h1>Combination</h1>
+			<h1>Combinación</h1>
 		</div>
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			    {{ form_start(delete_form) }}
-					<button type="submit" class="btn btn-danger">Delete</button>
+					<button type="submit" class="btn btn-danger">Borrar</button>
 				{{ form_end(delete_form) }}
 			</div>
 		</div>
@@ -21,11 +21,11 @@
                 <td>{{ combination.id }}</td>
             </tr>
             <tr>
-                <th>Showcase</th>
-                <td>{{ combination.showcaseid }}</td>
+                <th>Expositor</th>
+                <td>{{ combination.showcaseid.name }}</td>
             </tr>
             <tr>
-                <th>KeyCHAR</th>
+                <th>Pulsador</th>
                 <td>{{ combination.keychar }}</td>
             </tr>
             <tr>
@@ -34,8 +34,8 @@
             </tr>
         </tbody>
     </table>
-	<a class="btn btn-default" href="{{ path('show_showcase_index') }}" role="button">Back to the list</a>
+	<a class="btn btn-default" href="{{ path('show_showcase_show', { 'id': combination.showcaseid.id }) }}" role="button">Volver</a>
 
-	<a class="btn btn-primary" href="{{ path('show_showcase_combination_edit', { 'id': combination.id }) }}" role="button">Edit</a>
+	<a class="btn btn-primary" href="{{ path('show_showcase_combination_edit', { 'id': combination.id }) }}" role="button">Editar</a>
 	
 {% endblock %}

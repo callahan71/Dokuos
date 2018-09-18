@@ -1,49 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="text-center">New User</h1>
+    <h1 class="text-center">Nuevo usuario</h1>
 
     {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
-		<div class="form-group">
-			<label class="col-md-4 control-label">Username:</label>
+        <hr>
+        <div class="form-group">
+			<label class="col-md-4 control-label">Nombre de usuario</label>
 			<div class="col-md-5">
 			  {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-md-4 control-label">Password:</label>
+			<label class="col-md-4 control-label">Password</label>
 			<div class="col-md-5">				
 				{{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-md-4 control-label">Role:</label>
+			<label class="col-md-4 control-label">Rol (ROLE_USER, ROLE_ADMIN, ROLE_SHOW)</label>
 			<div class="col-md-5">				
 				{{ form_widget(form.role, {'attr': {'class': 'form-control'}}) }}
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-md-4 control-label">email:</label>
+			<label class="col-md-4 control-label">Email</label>
 			<div class="col-md-5">				
 				{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-md-4 control-label">Image:</label>
+			<label class="col-md-4 control-label">Imagen</label>
 			<div class="col-md-5">				
 				{{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
 			</div>
 		</div>
-
+        <hr>
 		<div class="form-group">
 			<div class="col-md-offset-5 col-md-1">
-			  <button type="submit" class="btn btn-primary">Create</button>
+			  <button type="submit" class="btn btn-primary">Crear</button>
 			</div>
 			<div class="col-md-3">
-			  <a class="btn btn-default" href="{{ path('show_user_index') }}" role="button">Back to the list</a>
+			  <a class="btn btn-default" href="{{ path('show_user_index') }}" role="button">Volver</a>
 			</div>
 		</div>
-		 
+        
     {{ form_end(form) }}
 
 {% endblock %}

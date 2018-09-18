@@ -3,32 +3,33 @@
 {% block body %}
     <div class="row">
 		<div class="col-md-10">
-			<h1>Video edit</h1>
+			<h1>Editar video</h1>
 		</div>
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			  {{ form_start(delete_form) }}
-                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-danger">Borrar</button>
               {{ form_end(delete_form) }}
 			</div>
 		</div>
 	</div>
 
     {{ form_start(edit_form, {'attr': {'class': 'form-horizontal'} }) }}
+        <hr>
         <div class="form-group">
 			<label class="col-md-4 control-label">Video</label>
 			<div class="col-md-5">
 			  {{ form_widget(edit_form.video, {'attr': {'class': 'form-control'}}) }}
 			</div>
 		</div>
-		
+        <hr>
         <div class="form-group">
 			<div class="col-md-offset-5 col-md-1">
-			  <button type="submit" class="btn btn-primary">Edit</button>
+			  <button type="submit" class="btn btn-primary">Editar</button>
 			</div>
 
 			<div class="col-md-1">
-			  <a class="btn btn-default" href="{{ path('show_video_index') }}" role="button">Back to the list</a>
+			  <a class="btn btn-default" href="{{ path('show_video_index') }}" role="button">Volver</a>
 			</div>
 		</div>
     {{ form_end(edit_form) }}

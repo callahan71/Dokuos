@@ -11,6 +11,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+	 * @Security("has_role('IS_AUTHENTICATED_ANONYMOUSLY')")
      */
     public function indexAction()
     {
@@ -50,8 +51,9 @@ class DefaultController extends Controller
 			
 			$arrayCombinations = array();
 			foreach ($combinations as $combination){
-				$arrayCombinations[$combination->getKeychar()]=$combination->getMaterialid()->getRef();
+				$arrayCombinations[$combination->getKeychar()] = $combination->getMaterialid()->getRef();
 			}
+			$arrayCombinations['userName'] = $user->getUsername();
 		}
         // ... do something, like pass the $product object into a template
         // 
@@ -66,6 +68,32 @@ class DefaultController extends Controller
 			'combinations' => $combinations,
 			'array' => $arrayCombinations,
 			'categories' => $categories
+        ));
+
+    }
+	
+	 /**
+     *
+     * @Route("/show/{token}/model/{id}", name="showcase_display_model")
+	 * @Security("has_role('ROLE_SHOW')")
+     */
+    public function displayModelAction($token,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $model = $em->getRepository('AppBundle:Models')->findOneBy(['id' => $id]);
+        //return $this->render('AppBundle:Default:display.html.twig',array('page'=>$page));
+        
+        if (!$model) {
+        throw $this->createNotFoundException(
+            'No model found for id '.$id
+        );
+        } else {
+			$zones = $em->getRepository('AppBundle:ActiveZones')->findModelZonesOrderedByRef($model);
+		}
+		return $this->render('main/model.html.twig', array(
+            'model' => $model,
+			'zones' => $zones,
+			'token' => $token
         ));
 
     }

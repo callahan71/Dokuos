@@ -3,12 +3,12 @@
 {% block body %}
     <div class="row">
 		<div class="col-md-10">
-			<h1>Combination edit</h1>
+			<h1>Editar combinación</h1>
 		</div>
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			  {{ form_start(delete_form) }}
-                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-danger">Borrar</button>
               {{ form_end(delete_form) }}
 			</div>
 		</div>
@@ -16,7 +16,7 @@
 
     {{ form_start(edit_form, {'attr': {'class': 'form-horizontal'} }) }}
         <div class="form-group">
-			<label class="col-md-4 control-label">KeyCHAR</label>
+			<label class="col-md-4 control-label">Pulsador</label>
 			<div class="col-md-5">
 			  {{ form_widget(edit_form.keychar, {'attr': {'class': 'form-control'}}) }}
 			</div>
@@ -30,7 +30,7 @@
 		
         <div class="form-group">
 			<div class="col-md-offset-5 col-md-1">
-			  <button type="submit" class="btn btn-primary">Edit</button>
+			  <button type="submit" class="btn btn-primary">Editar</button>
 			</div>
 		</div>
     {{ form_end(edit_form) }}

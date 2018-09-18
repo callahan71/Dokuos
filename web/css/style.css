@@ -121,6 +121,8 @@ main {
 
 .volver {
   color: black;
-  font-size: 5em;
+  font-size: 100px;
+  height: 100px;
+  width: 100px;
   opacity: 0.5;
 }

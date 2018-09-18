@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="text-center">Zone creation</h1>
+    <h1 class="text-center">Crear zona sensible</h1>
 
     {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+        <hr>
         <div class="form-group">
-			<label class="col-md-4 control-label">Zone REF</label>
+			<label class="col-md-4 control-label">REF</label>
 			<div class="col-md-5">
 			  {{ form_widget(form.zoneref, {'attr': {'class': 'form-control'}}) }}
 			</div>
@@ -16,12 +17,13 @@
 			  {{ form_widget(form.map, {'attr': {'class': 'form-control'}}) }}
 			</div>
 		</div>
+        <hr>
         <div class="form-group">
 			<div class="col-md-offset-5 col-md-1">
-			  <button type="submit" class="btn btn-primary">Create</button>
+			  <button type="submit" class="btn btn-primary">Crear</button>
 			</div>
 			<div class="col-md-3">
-			  <a class="btn btn-default" href="{{ path('show_model_index') }}" role="button">Back to the list</a>
+			  <a class="btn btn-default" href="{{ path('show_model_index') }}" role="button">Volver</a>
 			</div>
 		</div>
     {{ form_end(form) }}

@@ -1,0 +1,65 @@
+{% extends 'base.show.html.twig' %}
+
+{% block body %}
+    <div class="img-container">
+        <img id="selected_model" alt="{{ model.ref }}" class="img-item-fixed" src="{{ asset('uploads/' ~ model.userid ~ '/' ~ model.image) }}" width="1680" height="1080" border="0" />   
+        {% for zone in zones %}
+            <img id="{{ zone.zoneref }}" class="img-item-fixed" src="{{ asset('img/transparency.png') }}" width="1680" height="1080" border="0" />
+        {% endfor %}
+        <img id="coustom-image" class="img-item-fixed" src="{{ asset('img/transparency.png') }}" width="1680" height="1080" border="0" usemap="#map" />
+        <div class="mask flex-row waves-effect waves-light">
+        </div>
+    </div>
+    
+    <a class='flotante' href='{{ path('showcase_display', { 'token': token }) }}' ><i class="fas fa-arrow-alt-circle-left volver"></i></a>
+    
+    <map name="map">
+        {% for zone in zones %}
+        <area shape="poly" coords="{{ zone.map }}" alt="{{ zone.zoneref }}" target="{{ zone.zoneref }}" href="#" />
+        {% endfor %}
+    </map>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var model = $("#selected_model").attr("alt");
+        var selection;
+        var material;
+        var path = "/dokuos2/web/uploads/" + localStorage.getItem('userName') + "/";
+        //alert(model);
+        //alert(path);
+        
+        function existUrl(url) {
+           var http = new XMLHttpRequest();
+           http.open('HEAD', url, false);
+           http.send();
+           return http.status !== 404;
+        }
+        
+        $(function(){
+            $("area").on("click", function(event){
+                var value = $(this).attr("target");
+                event.preventDefault();
+                selection = value;
+                //alert(selection);
+            });
+
+            $("body").keypress(function(event) { //keypress devuelve mayusculas y minusculas e ignora shift y control
+                var value = String.fromCharCode(event.which);
+                event.stopPropagation();                
+                //material = arrayCombinations[value];     
+                material = localStorage.getItem(value);
+                alert(material);
+                //alert(arrayCombinations['userName']);
+                var file = model + "_" + selection + "_" + material + ".png";
+                //alert(path + file);
+                if (existUrl(path + file)) {
+                    $("#" + selection).attr("src",path + file);
+                    alert("Existe la ruta");
+                } else {
+                    alert("Combinación no soportada!");
+                };
+            });
+        });
+    </script>
+{% endblock %}

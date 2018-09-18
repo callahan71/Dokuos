@@ -8,7 +8,7 @@
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			    {{ form_start(delete_form) }}
-					<button type="submit" class="btn btn-danger">Delete</button>
+					<button type="submit" class="btn btn-danger">Borrar</button>
 				{{ form_end(delete_form) }}
 			</div>
 		</div>
@@ -19,23 +19,24 @@
             <tr>
                 <th>Id</th>
                 <td>{{ render.id }}</td>
-            </tr>
+            </tr>            
             <tr>
-                <th>Image</th>
-                <td>{{ render.modelid }}</td>
-            </tr>
-            <tr>
-                <th>Zone REF</th>
+                <th>REF Zona activa</th>
                 <td>{{ render.activeZoneid }}</td>
             </tr>
             <tr>
                 <th>Material</th>
-                <td>{{ render.map }}</td>
+                <td>{{ render.materialid }}</td>
             </tr>
-        </tbody>
+            <tr>
+                <th>Imagen</th>
+                <td><img alt="{{ render.image }}" src="{{ asset('uploads/' ~ render.activeZoneid.modelid.userid ~ '/' ~ render.image) }}" width="200" border="2" /></td>
+            </tr>
+        </tbody>        
     </table>
-	<a class="btn btn-default" href="{{ path('show_model_zone_show'), { 'id': render.activeZoneid }) }}" role="button">Back to the list</a>
+    <hr>
+	<a class="btn btn-default" href="{{ path('show_model_zone_show', { 'id': render.activeZoneid.id }) }}" role="button">Volver</a>
 
-	<a class="btn btn-primary" href="{{ path('show_model_zone_render_edit', { 'id': render.id }) }}" role="button">Edit</a>
+	<a class="btn btn-primary" href="{{ path('show_model_zone_render_edit', { 'id': render.id }) }}" role="button">Editar</a>
     	
 {% endblock %}

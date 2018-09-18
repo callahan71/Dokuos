@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Renders;
@@ -72,14 +73,23 @@ class RenderController extends Controller
      * @Route("/{id}/edit", name="show_model_zone_render_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Renders $render)
+    public function editAction(Request $request, Renders $render, FileUploader $fileUploader)
     {
+		$render->setImage(
+			new File($this->getParameter('upload_directory').'/'.$render->getMaterialid()->getUserid()->getUsername().'/'.$render->getImage())
+		);
         $deleteForm = $this->createDeleteForm($render);
         $editForm = $this->createForm('AppBundle\Form\RenderType', $render);
         $editForm->handleRequest($request);
 		
 		
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+			$file=$render->getImage();
+			$nameFile = $render->getActiveZoneid()->getModelid()->getRef().'_'.$render->getActiveZoneid()->getZoneref().'_'.$render->getMaterialid()->getRef();
+			$nameUser = $render->getMaterialid()->getUserid()->getUsername();
+			$file_name = $fileUploader->upload($file, $nameFile, $nameUser);
+			$render->setImage($file_name);
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($render);
             $em->flush();			

@@ -3,12 +3,12 @@
 {% block body %}
 	<div class="row">
 		<div class="col-md-10">
-			<h1>User</h1>
+			<h1>Usuario {{ user.username }}</h1>
 		</div>
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			    {{ form_start(delete_form) }}
-					<button type="submit" class="btn btn-danger">Delete</button>
+					<button type="submit" class="btn btn-danger">Borrar</button>
 				{{ form_end(delete_form) }}
 			</div>
 		</div>
@@ -21,7 +21,7 @@
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>Nombre</th>
                 <td>{{ user.username }}</td>
             </tr>
             <tr>
@@ -29,7 +29,7 @@
                 <td>{{ user.password|slice(0,20) }}</td>
             </tr>
             <tr>
-                <th>Role</th>
+                <th>Rol</th>
                 <td>{{ user.role }}</td>
             </tr>
             <tr>
@@ -37,14 +37,14 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Image</th>
+                <th>Imagen</th>
                 <td>{{ user.image }}</td>
             </tr>
         </tbody>
     </table>
-			
-	<a class="btn btn-default" href="{{ path('show_user_index') }}" role="button">Back to the list</a>
+    <hr>	
+	<a class="btn btn-default" href="{{ path('show_user_index') }}" role="button">Volver</a>
 
-	<a class="btn btn-primary" href="{{ path('show_user_edit', { 'id': user.id }) }}" role="button">Edit</a>
+	<a class="btn btn-primary" href="{{ path('show_user_edit', { 'id': user.id }) }}" role="button">Editar</a>
 
 {% endblock %}

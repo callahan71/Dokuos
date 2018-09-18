@@ -8,7 +8,7 @@
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			    {{ form_start(delete_form) }}
-					<button type="submit" class="btn btn-danger">Delete</button>
+					<button type="submit" class="btn btn-danger">Borrar</button>
 				{{ form_end(delete_form) }}
 			</div>
 		</div>
@@ -25,21 +25,21 @@
                 <td>{{ material.ref }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nombre</th>
                 <td>{{ material.name }}</td>
             </tr>
             <tr>
-                <th>User</th>
+                <th>Usuario</th>
                 <td>{{ material.userid }}</td>
             </tr>
             <tr>
-                <th>Image</th>
+                <th>Imagen</th>
                 <td>{{ material.image }}</td>
             </tr>
         </tbody>
     </table>
-	<a class="btn btn-default" href="{{ path('show_material_index') }}" role="button">Back to the list</a>
+	<a class="btn btn-default" href="{{ path('show_material_index') }}" role="button">Volver</a>
 
-	<a class="btn btn-primary" href="{{ path('show_material_edit', { 'id': material.id }) }}" role="button">Edit</a>
+	<a class="btn btn-primary" href="{{ path('show_material_edit', { 'id': material.id }) }}" role="button">Editar</a>
 	
 {% endblock %}

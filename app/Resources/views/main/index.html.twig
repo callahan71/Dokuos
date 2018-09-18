@@ -1,28 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.show.html.twig' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="robots" content="noindex">
-    <title>DOKUOS</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">    
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    
-</head>
-
-<body id="showcase" data-user-profile="{{ array|json_encode() }}">
-
-    <!-- Start your project here-->
-    
-    <header>
+{% block body %}
+    <header id="showcase" data-user-profile="{{ array|json_encode() }}">
         <img id="logo" src="{{ asset('img/DOKUOS-logo.png') }}" class="img-fluid" alt="Logo Dokuos">
     </header>
     
@@ -36,22 +15,9 @@
             </div>
         {% endfor %}
     </main>
-    
-    <!--
-    <main>
-        <div class="view overlay zoom option" id="opt5" data-toggle="modal" data-target="#modalBedroom">
-            <img src="img/menu/04.opt.bedroom.jpg" class="img-fluid img-full" alt="zoom">
-            <div class="mask flex-row waves-effect waves-light">
-                <span class="texto-vertical">dormitorios</span>
-            </div>
-        </div>
-    </main>
-    -->
     <footer>
         <p class="text-center">SELECCIONE UNA CATEGORÍA Y A CONTINUACIÓN UN AMBIENTE</p>
     </footer>
-    <!-- /Start your project here-->
-    
     {% for category in categories %}
     <!-- Modal {{ category.categoryid }}-->
     <div class="modal fade bd-example-modal-lg" id="{{ category.categoryid.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -88,7 +54,7 @@
                                     <div class="carousel-item">
                                 {% endif %}
                                 {% set slide = 2 %}                    
-                                    <a href="https://www.google.com">
+                                    <a href="{{ path('showcase_display_model', { 'token': show.token, 'id': model.id }) }}">
                                         <img class="d-block w-100" src="{{ asset('uploads/' ~ model.userid ~ '/' ~ model.image) }}" alt="{{ model.name }}">
                                     </a>
                                 </div>
@@ -115,30 +81,16 @@
     </div>
     <!-- /Modal -->
     {% endfor %}
-    
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>    
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+{% endblock %}
+
+{% block javascripts %}
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             var showcase = document.querySelector('#showcase');
             var nameShowcase = showcase.dataset.userProfile;
             arrayCombinations = JSON.parse(nameShowcase);
-        });
-        
-        $("body").keypress(function(event) { //keypress devuelve mayusculas y minusculas e ignora shift y control
-            var value = String.fromCharCode(event.which);
-            event.stopPropagation();                
-            material = arrayCombinations[value];                    
-            alert(material);
+            Object.keys(arrayCombinations).forEach(key => console.log(key, arrayCombinations[key]));
+            Object.keys(arrayCombinations).forEach(key => localStorage.setItem(key, arrayCombinations[key]));
         });
     </script>
-</body>
-
-</html>
+{% endblock %}
