@@ -11,7 +11,7 @@
                 <th>Password</th>
                 <th>Rol</th>
                 <th>Email</th>
-                <th>Imagen</th>
+                <th>Logo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@
                 <td>{{ user.password|slice(0,20) }}</td>
                 <td>{{ user.role }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.image }}</td>
+                <td><img class="img-thumbnail" alt="{{ user.username ~ ' logo' }}" src="{{ asset('uploads/' ~ user.username ~ '/' ~ user.image) }}" width="100" border="2" /></td>
                 <td>
 					<a data-toggle="tooltip" title="Ver" href="{{ path('show_user_show', { 'id': user.id }) }}" aria-label="Center Align">
 						<i class="far fa-eye fa-2x"></i>

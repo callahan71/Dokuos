@@ -9,6 +9,7 @@ security:
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER]
         ROLE_USER: [ROLE_SHOW, IS_AUTHENTICATED_ANONYMOUSLY]
+        ROLE_SHOW: [IS_AUTHENTICATED_ANONYMOUSLY]
         
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
@@ -18,8 +19,8 @@ security:
         in_memory:
             memory:
                 users:
-                    admin: {password: adminpass, roles: ROLE_ADMIN}
-                    jaime: {password: jaime, roles: ROLE_USER}
+                    admin: {password: adminpass1998, roles: ROLE_ADMIN}
+                    jaime: {password: jaime1998, roles: ROLE_USER}
         user_db:
             entity: { class: AppBundle\Entity\Users, property: username }
     firewalls:
@@ -55,11 +56,11 @@ security:
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: /show/.*, roles: ROLE_USER }
-        - { path: /show/user, roles: ROLE_ADMIN }
-        - { path: /show/category, roles: ROLE_ADMIN }
-        - { path: /show/video, roles: ROLE_USER }
-        - { path: /show/material, roles: ROLE_USER }
-        - { path: /show/model, roles: ROLE_ADMIN }
-        - { path: /show/showcase, roles: ROLE_ADMIN }
-        - { path: /show/showcase/new, roles: ROLE_ADMIN }
+        # - { path: /show/user, roles: ROLE_ADMIN }
+        # - { path: /show/category, roles: ROLE_ADMIN }
+        # - { path: /show/video, roles: ROLE_USER }
+        # - { path: /show/material, roles: ROLE_USER }
+        # - { path: /show/model, roles: ROLE_ADMIN }
+        # - { path: /show/showcase, roles: ROLE_ADMIN }
+        # - { path: /show/showcase/new, roles: ROLE_ADMIN }
         - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

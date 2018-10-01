@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}DOKUOS - Symfony{% endblock %}</title>
+        <title>{% block title %}DOKUOS - Show{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 		<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
@@ -45,7 +45,7 @@
 
                     <!-- Navbar brand -->
                     <a class="navbar-brand px-lg-4 mr-0" href="{{path('homepage')}}">
-                     <img src="{{ asset('img/DOKUOS-logo.png') }}" height="30" alt="">
+                     <img src="{{ asset('img/DOKUOS-logo.png') }}" height="40" alt="">
                     </a>
 
                     <!-- Links derecha-->
@@ -56,7 +56,9 @@
                         {% endif %}  
                         {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') or is_granted('ROLE_SHOW')%}
                             <li class="nav-item"><a class="nav-link" href="{{path('logout')}}">Logout</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{path('show_user_show', { 'id': app.user.id }) }}">{{ app.user }}</a></li>
+                                {% if app.user != 'admin' %}    
+                                <li class="nav-item"><a class="nav-link" href="{{path('show_user_show', { 'id': app.user.id }) }}">{{ app.user }}</a></li>
+                                {% endif %}
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="{{path('login')}}">Login</a></li>
                         {% endif %}

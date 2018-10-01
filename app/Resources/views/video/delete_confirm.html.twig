@@ -1,0 +1,18 @@
+{# empty Twig template #}
+{{ form_start(delete_form) }}
+<div class="uk-modal-header">
+    <h3 class="uk-modal-title">Delete this Video?</h3>
+</div>
+<p>
+    Are you sure you want to delete  '{{ video.name }}'?<br/>
+    This cannot be undone.
+</p>
+<div class="uk-modal-footer uk-text-right">
+    <div>
+        <button type="submit" class="md-btn md-btn-danger" title="Click to proceed!">
+            <i class="uk-icon-trash"></i> Delete
+        </button>
+        <button type="button" class="md-btn md-btn-warning uk-modal-close">Cancel</button>
+    </div>
+</div>
+{{ form_end(delete_form) }}

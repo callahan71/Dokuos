@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Combinations;
 use AppBundle\Entity\Showcases;
 
@@ -13,6 +14,7 @@ use AppBundle\Entity\Showcases;
  * Combination controller.
  *
  * @Route("/show/showcase/combination")
+ * @Security("has_role('ROLE_USER')")
  */
 class CombinationController extends Controller
 {
@@ -21,6 +23,7 @@ class CombinationController extends Controller
      *
      * @Route("/new/{id}", name="show_showcase_combination_new")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_USER')")
      */
     public function newAction(Request $request, Showcases $showcase)
     {
@@ -33,11 +36,15 @@ class CombinationController extends Controller
 			$combination->setShowcaseid($showcase);
             $em->persist($combination);
             $em->flush();
+			
+			$this->addFlash('notice', 'Combinación introducida con éxito!');	
 
-            return $this->redirectToRoute('show_showcase_show', array('id' => $showcase->getId()));
+            //return $this->redirectToRoute('show_showcase_show', array('id' => $showcase->getId()));
+			return $this->redirectToRoute('show_showcase_combination_new', array('id' => $showcase->getId()));
         }
 
         return $this->render('combination/new.html.twig', array(
+			'id' => $showcase->getId(),
             'combination' => $combination,
             'form' => $form->createView(),
         ));
@@ -48,6 +55,7 @@ class CombinationController extends Controller
      *
      * @Route("/{id}", name="show_showcase_combination_show")
      * @Method("GET")
+	 * @Security("has_role('ROLE_USER')")
      */
     public function showAction(Combinations $combination)
     {
@@ -64,6 +72,7 @@ class CombinationController extends Controller
      *
      * @Route("/{id}/edit", name="show_showcase_combination_edit")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_USER')")
      */
     public function editAction(Request $request, Combinations $combination)
     {
@@ -94,6 +103,7 @@ class CombinationController extends Controller
      *
      * @Route("/{id}", name="show_showcase_combination_delete")
      * @Method("DELETE")
+	 * @Security("has_role('ROLE_USER')")
      */
     public function deleteAction(Request $request, Combinations $combination)
     {

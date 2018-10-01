@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\ActiveZones;
 use AppBundle\Entity\Models;
 
@@ -13,6 +14,7 @@ use AppBundle\Entity\Models;
  * ActiveZone controller.
  *
  * @Route("/show/model/zone")
+ * @Security("has_role('ROLE_USER')")
  */
 class ActiveZoneController extends Controller
 {
@@ -21,6 +23,7 @@ class ActiveZoneController extends Controller
      *
      * @Route("/new/{id}", name="show_model_zone_new")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_USER')")
      */
     public function newAction(Request $request, Models $model)
     {
@@ -48,6 +51,7 @@ class ActiveZoneController extends Controller
      *
      * @Route("/{id}", name="show_model_zone_show")
      * @Method("GET")
+	 * @Security("has_role('ROLE_USER')")
      */
     public function showAction(ActiveZones $zone)
     {
@@ -69,6 +73,7 @@ class ActiveZoneController extends Controller
      *
      * @Route("/{id}/edit", name="show_model_zone_edit")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, ActiveZones $zone)
     {
@@ -99,6 +104,7 @@ class ActiveZoneController extends Controller
      *
      * @Route("/{id}", name="show_model_zone_delete")
      * @Method("DELETE")
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, ActiveZones $zone)
     {

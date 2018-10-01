@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Renders;
 use AppBundle\Entity\ActiveZones;
 use AppBundle\Service\FileUploader;
@@ -15,6 +16,7 @@ use AppBundle\Service\FileUploader;
  * Render controller.
  *
  * @Route("/show/model/zone/render")
+ * @Security("has_role('ROLE_USER')")
  */
 class RenderController extends Controller
 {
@@ -23,6 +25,7 @@ class RenderController extends Controller
      *
      * @Route("/new/{id}", name="show_model_zone_render_new")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_USER')")
      */
     public function newAction(Request $request, ActiveZones $zone, FileUploader $fileUploader)
     {
@@ -41,11 +44,15 @@ class RenderController extends Controller
 			$render->setActiveZoneid($zone);
             $em->persist($render);
             $em->flush();
+			
+			$this->addFlash('notice', 'Render introducido con éxito!');	
 
-            return $this->redirectToRoute('show_model_zone_show', array('id' => $zone->getId()));
+			return $this->redirectToRoute('show_model_zone_render_new', array('id' => $zone->getId()));
+			//return $this->redirectToRoute('show_model_zone_show', array('id' => $zone->getId()));
         }
 
         return $this->render('render/new.html.twig', array(
+			'id' => $zone->getId(),
             'render' => $render,
             'form' => $form->createView(),
         ));
@@ -56,6 +63,7 @@ class RenderController extends Controller
      *
      * @Route("/{id}", name="show_model_zone_render_show")
      * @Method("GET")
+	 * @Security("has_role('ROLE_USER')")
      */
     public function showAction(Renders $render)
     {
@@ -72,12 +80,16 @@ class RenderController extends Controller
      *
      * @Route("/{id}/edit", name="show_model_zone_render_edit")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_USER')")
      */
     public function editAction(Request $request, Renders $render, FileUploader $fileUploader)
     {
-		$render->setImage(
+		if ($render->getImage() != null){
+			$render->setImage(
 			new File($this->getParameter('upload_directory').'/'.$render->getMaterialid()->getUserid()->getUsername().'/'.$render->getImage())
-		);
+			);
+		}
+		
         $deleteForm = $this->createDeleteForm($render);
         $editForm = $this->createForm('AppBundle\Form\RenderType', $render);
         $editForm->handleRequest($request);
@@ -111,6 +123,7 @@ class RenderController extends Controller
      *
      * @Route("/{id}", name="show_model_zone_render_delete")
      * @Method("DELETE")
+	 * @Security("has_role('ROLE_USER')")
      */
     public function deleteAction(Request $request, Renders $render)
     {

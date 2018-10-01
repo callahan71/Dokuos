@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1>Videos</h1>
 
     <table class="table table-hover">
@@ -34,6 +39,6 @@
         </tbody>
     </table>
 		
-        <a class="color-primary" data-toggle="tooltip" title="Nuevo video" href="{{ path('show_video_new') }}"><i class="fas fa-plus-circle fa-3x"></i></a>
-
+    <a class="color-primary" data-toggle="tooltip" title="Nuevo video" href="{{ path('show_video_new') }}"><i class="fas fa-plus-circle fa-3x"></i></a>
+    
 {% endblock %}

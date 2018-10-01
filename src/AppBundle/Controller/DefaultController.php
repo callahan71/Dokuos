@@ -54,6 +54,7 @@ class DefaultController extends Controller
 				$arrayCombinations[$combination->getKeychar()] = $combination->getMaterialid()->getRef();
 			}
 			$arrayCombinations['userName'] = $user->getUsername();
+			$arrayCombinations['myURL'] = $this->container->get('router')->getContext()->getBaseUrl();
 		}
         // ... do something, like pass the $product object into a template
         // 

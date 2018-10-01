@@ -14,11 +14,21 @@ class MaterialType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('ref')
+		if (in_array('ROLE_ADMIN', $options['role'])) {
+            // do as you want if admin
+            $builder
+			->add('ref')
+			->add('name')
+			->add('image')		
+			->add('userid')
+			;
+        } else {
+            $builder
+			->add('ref')
 			->add('name')
 			->add('image')
-        ;
+			;
+        }
     }
     
     /**
@@ -27,7 +37,8 @@ class MaterialType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Materials'
+            'data_class' => 'AppBundle\Entity\Materials',
+			'role' => ['ROLE_USER']
         ));
     }
 }

@@ -37,8 +37,8 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Imagen</th>
-                <td>{{ user.image }}</td>
+                <th>Logo</th>
+                <td><img class="img-thumbnail" alt="{{ user.username ~ ' logo' }}" src="{{ asset('uploads/' ~ user.username ~ '/' ~ user.image) }}" width="200" border="2" /></td>
             </tr>
         </tbody>
     </table>

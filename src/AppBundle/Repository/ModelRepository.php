@@ -46,4 +46,15 @@ class ModelRepository extends \Doctrine\ORM\EntityRepository
 				)->setParameter('id', $user->getId())
             ->getResult();
     }
+	
+	public function findModelsByUser($user){
+		return $this->getEntityManager()
+            ->createQuery(
+					'SELECT m
+					   FROM AppBundle:Models m
+					  WHERE m.userid = :id
+				   ORDER BY m.categoryid, m.name ASC'
+				)->setParameter('id', $user->getId())
+            ->getResult();
+	}
 }

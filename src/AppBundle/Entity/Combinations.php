@@ -24,7 +24,7 @@ class Combinations
     /**
      * @var string
      *
-     * @ORM\Column(name="keyCHAR", type="string", length=1, nullable=false)
+     * @ORM\Column(name="keyCHAR", type="string", length=2, nullable=false)
      */
     private $keychar;
 

@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1 class="text-center">Nueva combinación</h1>
 
     {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
@@ -20,8 +25,8 @@
 			<div class="col-md-offset-5 col-md-1">
 			  <button type="submit" class="btn btn-primary">Crear</button>
 			</div>
-			<div class="col-md-3">
-			  <a class="btn btn-default" href="{{ path('show_showcase_index') }}" role="button">Volver</a>
+			<div class="col-md-1">
+			  <a class="btn btn-default" href="{{ path('show_showcase_show', { 'id': id }) }}" role="button">Volver</a>
 			</div>
 		</div>
     {{ form_end(form) }}

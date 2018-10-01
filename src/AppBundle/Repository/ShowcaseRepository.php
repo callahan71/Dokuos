@@ -29,4 +29,15 @@ class ShowcaseRepository extends \Doctrine\ORM\EntityRepository
 				)->setParameter('token', $token)
             ->getResult();
 	}
+	
+	public function findShowcasesByUser($user){
+		return $this->getEntityManager()
+            ->createQuery(
+					'SELECT s
+					   FROM AppBundle:Showcases s
+					  WHERE s.userid = :id
+				   ORDER BY s.name ASC'
+				)->setParameter('id', $user->getId())
+            ->getResult();
+	}
 }

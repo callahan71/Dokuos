@@ -4,15 +4,19 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Users;
 use AppBundle\Form\UserType;
+use AppBundle\Service\FileUploader;
 
 /**
  * User controller.
  *
  * @Route("/show/user")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends Controller
 {
@@ -21,6 +25,7 @@ class UserController extends Controller
      *
      * @Route("/", name="show_user_index")
      * @Method("GET")
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
@@ -38,8 +43,9 @@ class UserController extends Controller
      *
      * @Route("/new", name="show_user_new")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, FileUploader $fileUploader)
     {
         $user = new Users();
         $form = $this->createForm('AppBundle\Form\UserType', $user);
@@ -47,13 +53,18 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 			//Creamos directorio con el nombre del usuario
-			mkdir($this->getParameter('upload_directory').'/'.$user->getUsername(), 0700);
+			mkdir($this->getParameter('upload_directory').'/'.$user->getUsername(), 0707);
+			
+			$file=$form['image']->getData();
+			$file_name = $fileUploader->upload($file, $user->getUsername(), $user->getUsername());
+			$user->setImage($file_name);
 			
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);			
             $em->flush();
 			
-            return $this->redirectToRoute('show_user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('show_user_index');
+			//return $this->redirectToRoute('show_user_show', array('id' => $user->getId()));
         }
 
         return $this->render('user/new.html.twig', array(
@@ -67,6 +78,7 @@ class UserController extends Controller
      *
      * @Route("/{id}", name="show_user_show")
      * @Method("GET")
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function showAction(Users $user)
     {
@@ -83,19 +95,31 @@ class UserController extends Controller
      *
      * @Route("/{id}/edit", name="show_user_edit")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction(Request $request, Users $user)
+    public function editAction(Request $request, Users $user, FileUploader $fileUploader)
     {
+		if ($user->getImage() != null){
+			$user->setImage(
+				new File($this->getParameter('upload_directory').'/'.$user->getUsername().'/'.$user->getImage())
+			);
+		}
+		
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('AppBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+			$file=$user->getImage();
+			$file_name = $fileUploader->upload($file, $user->getUsername(), $user->getUsername());
+			$user->setImage($file_name);
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('show_user_edit', array('id' => $user->getId()));
+			return $this->redirectToRoute('show_user_index');            
+			//return $this->redirectToRoute('show_user_edit', array('id' => $user->getId()));
         }
 
         return $this->render('user/edit.html.twig', array(
@@ -110,6 +134,7 @@ class UserController extends Controller
      *
      * @Route("/{id}", name="show_user_delete")
      * @Method("DELETE")
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Users $user)
     {

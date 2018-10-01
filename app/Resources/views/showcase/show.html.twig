@@ -5,6 +5,8 @@
 		<div class="col-md-10">
 			<h1>Expositor {{ showcase.name }}</h1>
 		</div>
+        
+        {% if is_granted('ROLE_ADMIN') %}    
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			    {{ form_start(delete_form) }}
@@ -12,6 +14,8 @@
 				{{ form_end(delete_form) }}
 			</div>
 		</div>
+        {% endif %}   
+         
 	</div>
     
     <table class="table table-hover">
@@ -45,8 +49,11 @@
     </table>
     
 	<a class="btn btn-default" href="{{ path('show_showcase_index') }}" role="button">Volver</a>
-
+    
+    {% if is_granted('ROLE_ADMIN') %}  
 	<a class="btn btn-primary" href="{{ path('show_showcase_edit', { 'id': showcase.id }) }}" role="button">Editar</a>
+    {% endif %} 
+    
     <hr>
     {# Listado de las combinaciones de este expositor #}
     <h2>Combinaciones</h2>

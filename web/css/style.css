@@ -3,12 +3,18 @@
 
 body {
 	margin: 0;
-	background-image: url("/dokuos2/web/img/background-2.jpg");
+	/* background-image: url("/dokuos2/web/img/background-2.jpg"); */
+    background-color: Gainsboro;
 	width: 100%;
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+}
+
+.showcase {
+   /* background-image: url("/dokuos2/web/img/background-2.jpg"); */
+   background-image: url("../img/background.jpg"); 
 }
 
 header, footer {
@@ -47,7 +53,7 @@ main {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     transform: rotate(180deg);
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 .img-full {
@@ -125,4 +131,8 @@ main {
   height: 100px;
   width: 100px;
   opacity: 0.5;
+}
+
+.audio-hide{
+display: none
 }

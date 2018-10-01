@@ -5,6 +5,8 @@
 		<div class="col-md-10">
 			<h1>Ambiente {{ model.name }}</h1>
 		</div>
+        
+        {% if is_granted('ROLE_ADMIN') %}
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
 			    {{ form_start(delete_form) }}
@@ -12,6 +14,8 @@
 				{{ form_end(delete_form) }}
 			</div>
 		</div>
+        {% endif %}
+        
 	</div>
 
     <table class="table table-hover">
@@ -43,8 +47,11 @@
         </tbody>
     </table>
 	<a class="btn btn-default" href="{{ path('show_model_index') }}" role="button">Volver</a>
-
+    
+    {% if is_granted('ROLE_ADMIN') %}
 	<a class="btn btn-primary" href="{{ path('show_model_edit', { 'id': model.id }) }}" role="button">Editar</a>
+    {% endif %}
+    
     <hr>
     {# Listado de las zonas de este modelo #}
     <h2>Zonas activas</h2>
@@ -65,10 +72,10 @@
                     <a data-toggle="tooltip" title="Ver" href="{{ path('show_model_zone_show', { 'id': zone.id }) }}" aria-label="Center Align">
 						<i class="far fa-eye fa-2x"></i>
 					</a>
+                    {% if is_granted('ROLE_ADMIN') %}      
 					<a data-toggle="tooltip" title="Editar" href="{{ path('show_model_zone_edit', { 'id': zone.id }) }}" aria-label="Center Align">
 						<i class="fas fa-edit fa-2x"></i>
-					</a>
-                    {% if is_granted('ROLE_ADMIN') %}    
+					</a>                      
                     <a data-toggle="tooltip" title="Borrar" href="{{ path('show_model_zone_delete', { 'id': zone.id }) }}" aria-label="Center Align">
 						<i class="fas fa-trash-alt fa-2x"></i>
 					</a>

@@ -14,9 +14,17 @@ class VideoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+		if (in_array('ROLE_ADMIN', $options['role'])) {
+            // do as you want if admin
+            $builder
             ->add('video')
-        ;
+			->add('userid')
+			;
+        } else {
+            $builder
+            ->add('video')
+			;
+        }	        
     }
     
     /**
@@ -25,7 +33,8 @@ class VideoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Videos'
+            'data_class' => 'AppBundle\Entity\Videos',
+            'role' => ['ROLE_USER']
         ));
     }
 }

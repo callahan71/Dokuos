@@ -28,6 +28,13 @@ class Categories
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
 
 	/**
      * @ORM\OneToMany(targetEntity="Models", mappedBy="categoryid")
@@ -74,6 +81,30 @@ class Categories
     public function getName()
     {
         return $this->name;
+    }
+	
+	/**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Categories
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 	
 	/**

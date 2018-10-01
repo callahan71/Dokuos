@@ -1,12 +1,19 @@
 {% extends 'base.show.html.twig' %}
 
 {% block body %}
+    <audio id="audio-click" class="audio-hide" controls>
+        <source type="audio/wav" src="{{ asset('sound/click.mp3') }}">
+    </audio>
+    <audio id="audio-wrong" class="audio-hide" controls>
+        <source type="audio/wav" src="{{ asset('sound/wrong.mp3') }}">
+    </audio>
+    
     <div class="img-container">
-        <img id="selected_model" alt="{{ model.ref }}" class="img-item-fixed" src="{{ asset('uploads/' ~ model.userid ~ '/' ~ model.image) }}" width="1680" height="1080" border="0" />   
+        <img id="selected_model" alt="{{ model.ref }}" class="img-item-fixed" src="{{ asset('uploads/' ~ model.userid ~ '/' ~ model.image) }}" width="1920" height="1080" border="0" />   
         {% for zone in zones %}
-            <img id="{{ zone.zoneref }}" class="img-item-fixed" src="{{ asset('img/transparency.png') }}" width="1680" height="1080" border="0" />
+            <img id="{{ zone.zoneref }}" class="img-item-fixed" src="{{ asset('img/transparency.png') }}" width="1920" height="1080" border="0" />
         {% endfor %}
-        <img id="coustom-image" class="img-item-fixed" src="{{ asset('img/transparency.png') }}" width="1680" height="1080" border="0" usemap="#map" />
+        <img id="coustom-image" class="img-item-fixed" src="{{ asset('img/transparency.png') }}" width="1920" height="1080" border="0" usemap="#map" />
         <div class="mask flex-row waves-effect waves-light">
         </div>
     </div>
@@ -23,9 +30,11 @@
 {% block javascripts %}
     <script type="text/javascript">
         var model = $("#selected_model").attr("alt");
+        var material_code = "";
         var selection;
         var material;
         var path = "/dokuos2/web/uploads/" + localStorage.getItem('userName') + "/";
+        //var path = localStorage.getItem('myURL') + "/uploads/" + localStorage.getItem('userName') + "/";
         //alert(model);
         //alert(path);
         
@@ -41,24 +50,33 @@
                 var value = $(this).attr("target");
                 event.preventDefault();
                 selection = value;
+                var audio = document.getElementById("audio-click");
+                audio.play();
                 //alert(selection);
             });
 
             $("body").keypress(function(event) { //keypress devuelve mayusculas y minusculas e ignora shift y control
                 var value = String.fromCharCode(event.which);
-                event.stopPropagation();                
-                //material = arrayCombinations[value];     
-                material = localStorage.getItem(value);
-                alert(material);
-                //alert(arrayCombinations['userName']);
-                var file = model + "_" + selection + "_" + material + ".png";
-                //alert(path + file);
-                if (existUrl(path + file)) {
-                    $("#" + selection).attr("src",path + file);
-                    alert("Existe la ruta");
-                } else {
-                    alert("Combinación no soportada!");
-                };
+                event.stopPropagation();     
+                material_code += value;
+                //alert(material_code);
+                if (material_code.length == 2){
+                    //material = arrayCombinations[value];     
+                    material = localStorage.getItem(material_code);
+                    //alert(material);
+                    //alert(arrayCombinations['userName']);
+                    var file = model + "_" + selection + "_" + material + ".png";
+                    //alert(path + file);
+                    if (existUrl(path + file)) {
+                        $("#" + selection).attr("src",path + file);                        
+                        //alert("Existe la ruta");
+                    } else {
+                        var audio = document.getElementById("audio-wrong");
+                        audio.play();
+                        alert("Combinación no soportada!");
+                    };
+                    material_code = "";
+                }                
             });
         });
     </script>

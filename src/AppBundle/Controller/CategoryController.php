@@ -4,15 +4,19 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Categories;
 use AppBundle\Form\CategoryType;
+use AppBundle\Service\FileUploader;
 
 /**
  * Categories controller.
  *
  * @Route("/show/category")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class CategoryController extends Controller
 {
@@ -21,6 +25,7 @@ class CategoryController extends Controller
      *
      * @Route("/", name="show_category_index")
      * @Method("GET")
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
@@ -38,19 +43,25 @@ class CategoryController extends Controller
      *
      * @Route("/new", name="show_category_new")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, FileUploader $fileUploader)
     {
         $category = new Categories();
         $form = $this->createForm('AppBundle\Form\CategoryType', $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+			$file=$form['image']->getData();
+			$file_name = $fileUploader->upload($file, $category->getName(), 'SET-CAT');
+			$category->setImage($file_name);
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('show_category_show', array('id' => $category->getId()));
+            return $this->redirectToRoute('show_category_index');
+			//return $this->redirectToRoute('show_category_show', array('id' => $category->getId()));
         }
 
         return $this->render('category/new.html.twig', array(
@@ -64,6 +75,7 @@ class CategoryController extends Controller
      *
      * @Route("/{id}", name="show_category_show")
      * @Method("GET")
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function showAction(Categories $category)
     {
@@ -80,14 +92,25 @@ class CategoryController extends Controller
      *
      * @Route("/{id}/edit", name="show_category_edit")
      * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction(Request $request, Categories $category)
+    public function editAction(Request $request, Categories $category, FileUploader $fileUploader)
     {
+		if ($category->getImage() != null){
+			$category->setImage(
+				new File($this->getParameter('upload_directory').'/SET-CAT/'.$category->getImage())
+			);
+		}
+		
         $deleteForm = $this->createDeleteForm($category);
         $editForm = $this->createForm('AppBundle\Form\CategoryType', $category);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+			$file=$category->getImage();
+			$file_name = $fileUploader->upload($file, $category->getName(), 'SET-CAT');
+			$category->setImage($file_name);
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
@@ -108,6 +131,7 @@ class CategoryController extends Controller
      *
      * @Route("/{id}", name="show_category_delete")
      * @Method("DELETE")
+	 * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Categories $category)
     {

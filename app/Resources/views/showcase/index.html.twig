@@ -36,12 +36,16 @@
 					<a data-toggle="tooltip" title="Ver" href="{{ path('show_showcase_show', { 'id': showcase.id }) }}" aria-label="Center Align">
 						<i class="far fa-eye fa-2x"></i>
 					</a>
+                        
+                    {% if is_granted('ROLE_ADMIN') %}
 					<a data-toggle="tooltip" title="Editar" href="{{ path('show_showcase_edit', { 'id': showcase.id }) }}" aria-label="Center Align">
 						<i class="fas fa-edit fa-2x"></i>
 					</a>
                     <a data-toggle="tooltip" title="Borrar" href="{{ path('show_showcase_delete', { 'id': showcase.id }) }}" aria-label="Center Align">
 						<i class="fas fa-trash-alt fa-2x"></i>
 					</a>
+                    {% endif %}
+                    
                 </td>
             </tr>
         {% endfor %}

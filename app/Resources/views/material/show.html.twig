@@ -7,9 +7,7 @@
 		</div>
 		<div class="col-md-1">
 			<div class="col-md-offset-6 col-md-1">
-			    {{ form_start(delete_form) }}
-					<button type="submit" class="btn btn-danger">Borrar</button>
-				{{ form_end(delete_form) }}
+			    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteVideo">Borrar</button>
 			</div>
 		</div>
 	</div>
@@ -28,10 +26,14 @@
                 <th>Nombre</th>
                 <td>{{ material.name }}</td>
             </tr>
+            
+            {% if is_granted('ROLE_ADMIN') %}
             <tr>
                 <th>Usuario</th>
                 <td>{{ material.userid }}</td>
             </tr>
+            {% endif %}
+            
             <tr>
                 <th>Imagen</th>
                 <td>{{ material.image }}</td>
@@ -42,4 +44,29 @@
 
 	<a class="btn btn-primary" href="{{ path('show_material_edit', { 'id': material.id }) }}" role="button">Editar</a>
 	
+    <!-- Modal -->
+    <div class="modal fade" id="deleteVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar elemento</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Desea borrar el material de forma definitiva?
+            Esta acción no puede deshacerse.
+            Los elementos que hagan referencia a este material, quedarán huérfanos.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            {{ form_start(delete_form) }}
+					<button type="submit" class="btn btn-danger">Borrar</button>
+			{{ form_end(delete_form) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Modal -->
 {% endblock %}

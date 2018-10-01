@@ -8,6 +8,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Imagen</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
             <tr>
                 <td><a href="{{ path('show_category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
                 <td>{{ category.name }}</td>
+                <td>{{ category.image }}</td>
                 <td>
 					<a data-toggle="tooltip" title="Ver" href="{{ path('show_category_show', { 'id': category.id }) }}" aria-label="Center Align">
 						<i class="far fa-eye fa-2x"></i>
