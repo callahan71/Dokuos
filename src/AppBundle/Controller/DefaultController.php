@@ -31,7 +31,7 @@ class DefaultController extends Controller
     /**
      *
      * @Route("/show/{token}", name="showcase_display")
-	 * @Security("has_role('ROLE_SHOW')")
+	 * @Security("has_role('IS_AUTHENTICATED_ANONYMOUSLY')")
      */
     public function displayAction($token)
     {
@@ -76,7 +76,7 @@ class DefaultController extends Controller
 	 /**
      *
      * @Route("/show/{token}/model/{id}", name="showcase_display_model")
-	 * @Security("has_role('ROLE_SHOW')")
+	 * @Security("has_role('IS_AUTHENTICATED_ANONYMOUSLY')")
      */
     public function displayModelAction($token,$id)
     {

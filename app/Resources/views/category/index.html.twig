@@ -17,7 +17,7 @@
             <tr>
                 <td><a href="{{ path('show_category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
                 <td>{{ category.name }}</td>
-                <td>{{ category.image }}</td>
+                <td><img alt="{{ category.name }}" src="{{ asset('uploads/SET-CAT/' ~ category.image) }}" width="50" border="2" /></td>
                 <td>
 					<a data-toggle="tooltip" title="Ver" href="{{ path('show_category_show', { 'id': category.id }) }}" aria-label="Center Align">
 						<i class="far fa-eye fa-2x"></i>

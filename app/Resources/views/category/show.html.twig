@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <th>Imagen</th>
-                <td>{{ category.image }}</td>
+                <td><img alt="{{ category.name }}" src="{{ asset('uploads/SET-CAT/' ~ category.image) }}" width="100" border="2" /></td>
             </tr>
         </tbody>
     </table>

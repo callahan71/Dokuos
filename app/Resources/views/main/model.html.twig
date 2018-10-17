@@ -18,7 +18,10 @@
         </div>
     </div>
     
-    <a class='flotante' href='{{ path('showcase_display', { 'token': token }) }}' ><i class="fas fa-arrow-alt-circle-left volver"></i></a>
+    <a id="return" class='flotante' href='{{ path('showcase_display', { 'token': token }) }}' ><i class="fas fa-arrow-alt-circle-left volver"></i></a>
+    <a id="refresh" class='flotante' href='{{ path('showcase_display_model', { 'token': token, 'id': model.id  }) }}' ><i class="fas fa-sync-alt refresh"></i></a>
+    <div id="working" class="pulse-loader"></div>
+    <div id="notice-box" class="flotante"></div>
     
     <map name="map">
         {% for zone in zones %}
@@ -28,56 +31,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
-        var model = $("#selected_model").attr("alt");
-        var material_code = "";
-        var selection;
-        var material;
-        var path = "/dokuos2/web/uploads/" + localStorage.getItem('userName') + "/";
-        //var path = localStorage.getItem('myURL') + "/uploads/" + localStorage.getItem('userName') + "/";
-        //alert(model);
-        //alert(path);
-        
-        function existUrl(url) {
-           var http = new XMLHttpRequest();
-           http.open('HEAD', url, false);
-           http.send();
-           return http.status !== 404;
-        }
-        
-        $(function(){
-            $("area").on("click", function(event){
-                var value = $(this).attr("target");
-                event.preventDefault();
-                selection = value;
-                var audio = document.getElementById("audio-click");
-                audio.play();
-                //alert(selection);
-            });
-
-            $("body").keypress(function(event) { //keypress devuelve mayusculas y minusculas e ignora shift y control
-                var value = String.fromCharCode(event.which);
-                event.stopPropagation();     
-                material_code += value;
-                //alert(material_code);
-                if (material_code.length == 2){
-                    //material = arrayCombinations[value];     
-                    material = localStorage.getItem(material_code);
-                    //alert(material);
-                    //alert(arrayCombinations['userName']);
-                    var file = model + "_" + selection + "_" + material + ".png";
-                    //alert(path + file);
-                    if (existUrl(path + file)) {
-                        $("#" + selection).attr("src",path + file);                        
-                        //alert("Existe la ruta");
-                    } else {
-                        var audio = document.getElementById("audio-wrong");
-                        audio.play();
-                        alert("Combinación no soportada!");
-                    };
-                    material_code = "";
-                }                
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{ asset('js/appdok.js') }}"></script>
 {% endblock %}

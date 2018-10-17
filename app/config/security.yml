@@ -10,6 +10,7 @@ security:
         ROLE_ADMIN: [ROLE_USER]
         ROLE_USER: [ROLE_SHOW, IS_AUTHENTICATED_ANONYMOUSLY]
         ROLE_SHOW: [IS_AUTHENTICATED_ANONYMOUSLY]
+        IS_AUTHENTICATED_ANONYMOUSLY: [IS_AUTHENTICATED_ANONYMOUSLY]
         
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:

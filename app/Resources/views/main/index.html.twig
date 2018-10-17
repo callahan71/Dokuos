@@ -2,15 +2,17 @@
 
 {% block body %}
     <header id="showcase" data-user-profile="{{ array|json_encode() }}">
-        <img id="logo" src="{{ asset('img/DOKUOS-logo.png') }}" class="img-fluid" alt="Logo Dokuos">
+        <img id="logo" src="{{ asset('uploads/' ~ show.userid ~ '/' ~ show.userid.image) }}" class="img-fluid" alt="Logo">
+        
     </header>
     
     <main>
         {% for category in categories %}
-            <div class="view overlay zoom option" id="opt{{ category.categoryid.id }}" data-toggle="modal" data-target="#{{ category.categoryid.id }}">
-                <img src="{{ asset('img/kitchen.jpg') }}" class="mx-auto d-block" alt="zoom">
-                <!-- class="img-fluid img-full" -->
+            <div class="view  zoom option" id="opt{{ category.categoryid.id }}" data-toggle="modal" data-target="#{{ category.categoryid.id }}">
+                <img src="{{ asset('uploads/SET-CAT/' ~ category.categoryid.image) }}" class="img-fluid img-full" alt="zoom">
+                <!--  class="mx-auto d-block" 
                 <span class="texto-vertical">{{ category.categoryid }}</span>
+                -->
                 <div class="mask flex-row waves-effect waves-light">
                     <span class="texto-vertical">{{ category.categoryid }}</span>
                 </div>
@@ -18,7 +20,7 @@
         {% endfor %}
     </main>
     <footer>
-        <p class="text-center">SELECCIONE UNA CATEGORÍA Y A CONTINUACIÓN UN AMBIENTE</p>
+        <p class="text-center">SELECCIONE UNA CATEGORÍA Y UN AMBIENTE</p>
     </footer>
     {% for category in categories %}
     <!-- Modal {{ category.categoryid }}-->
